@@ -1,19 +1,37 @@
-const dataset = {
-  tasks: {
-    "task-1": { id: "task-1", content: "Content for task 1" },
-    "task-2": { id: "task-2", content: "Content for task-2" },
-    "task-3": { id: "task-3", content: "Content for task-3" },
-    "task-4": { id: "task-4", content: "Content for task-4" },
+export const initialBoardData = {
+  items: {
+    "item-1": { id: "item-1", content: "Content of item 1." },
+    "item-2": { id: "item-2", content: "Content of item 2." },
+    "item-3": { id: "item-3", content: "Content of item 3." },
+    "item-4": { id: "item-4", content: "Content of item 4." },
+    "item-5": { id: "item-5", content: "Content of item 5." },
+    "item-6": { id: "item-6", content: "Content of item 6." },
+    "item-7": { id: "item-7", content: "Content of item 7." },
   },
   columns: {
-    "column-1": { id: "column-1", title: "Open", taskIds: ["task-1"] },
+    "column-1": {
+      id: "column-1",
+      title: "Open",
+      itemsIds: [
+        "item-1",
+        "item-2",
+        "item-3",
+        "item-4",
+        "item-5",
+        "item-6",
+        "item-7",
+      ],
+    },
     "column-2": {
       id: "column-2",
-      title: "In progress",
-      taskIds: ["task-2", "task-3"],
+      title: "In Progress",
+      itemsIds: [],
     },
-    "column-3": { id: "column-3", title: "Completed", taskIds: ["task-4"] },
+    "column-3": {
+      id: "column-3",
+      title: "Complete",
+      itemsIds: [],
+    },
   },
-  columnOrder: ["column-1", "column-2", "column-3"],
+  columnsOrder: ["column-1", "column-2", "column-3"],
 };
-export default dataset;

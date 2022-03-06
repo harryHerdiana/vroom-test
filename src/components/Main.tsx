@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import Cookies from "js-cookie";
+import { Board } from "./board";
+
 const Main = () => {
   const navigate = useNavigate();
   const { isLogin, setLogout } = useContext(UserContext);
@@ -11,6 +13,8 @@ const Main = () => {
     Cookies.remove("email");
     Cookies.remove("token");
   };
+  // const dateUTC = Math.round(new Date().getTime() / 1000);
+
   return (
     <div>
       {isLogin === false && (
@@ -23,6 +27,7 @@ const Main = () => {
         <div>
           <h1 className="uppercase text-4xl">Test</h1>
           <button onClick={handleLogout}>Log out</button>
+          <Board />
         </div>
       )}
     </div>
