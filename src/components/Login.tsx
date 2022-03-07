@@ -11,7 +11,7 @@ const Login = () => {
   });
   let history = useHistory();
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     const randomTime = Math.random() * 2000;
     event.preventDefault();
     const checkUser = userContext?.userData.find(
@@ -35,40 +35,45 @@ const Login = () => {
     let name = event.target.name;
     setInput({ ...input, [name]: typeOfInput });
   };
-  const testing = () => {
-    userContext.setLoading();
-    console.log(userContext.isLoading, " before timeout");
-    const randomTime = Math.random() * 2000;
-    setTimeout(() => {
-      userContext.setNotLoading();
-      console.log(userContext.isLoading, " after timeout");
-    }, randomTime);
-  };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>Username: </label>
-        <input
-          type="email"
-          name="email"
-          onChange={handleChange}
-          value={input.email}
-        />
-        <br />
-        <label>Password: </label>
-        <input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          value={input.password}
-        />
-        <br />
-        <button>Login</button>
-      </form>
-      <button onClick={testing}>Test</button>
-      {userContext.isLoading && <div>Loading</div>}
-    </>
+    <div className="absolute flex flex-col w-screen h-screen top-0 left-0 ">
+      <div className="m-auto flex flex-col items-center px-4">
+        <img src="images/Logo.png" alt="logo" className="w-max md:w-1/3" />
+        <form onSubmit={handleSubmit} className="w-full md:w-80">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Your email
+          </label>
+          <input
+            type="text"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="email"
+            value={input.email}
+            onChange={handleChange}
+          />
+
+          <div className="mb-6">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              Your password
+            </label>
+            <input
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="password"
+              name="password"
+              value={input.password}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 
