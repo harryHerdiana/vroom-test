@@ -1,26 +1,39 @@
-export const initialBoardData = {
+export let initialBoardData = {
   items: {
-    "item-1": { id: "item-1", content: "Content of item 1." },
-    "item-2": { id: "item-2", content: "Content of item 2." },
-    "item-3": { id: "item-3", content: "Content of item 3." },
-    "item-4": { id: "item-4", content: "Content of item 4." },
-    "item-5": { id: "item-5", content: "Content of item 5." },
-    "item-6": { id: "item-6", content: "Content of item 6." },
-    "item-7": { id: "item-7", content: "Content of item 7." },
+    "item-1": {
+      id: "item-1",
+      title: "Todo Number: 1.",
+      description: "Description text 1",
+      status: "open",
+      created: 1646581923,
+    },
+    "item-2": {
+      id: "item-2",
+      title: "Todo Number: 2.",
+      description: "Description text 2",
+      status: "open",
+      created: 1646581923,
+    },
+    "item-3": {
+      id: "item-3",
+      title: "Todo Number: 3.",
+      description: "Description text 3",
+      status: "open",
+      created: 1646581923,
+    },
+    "item-4": {
+      id: "item-4",
+      title: "Todo Number: 4.",
+      description: "Description text 4",
+      status: "open",
+      created: 1646581923,
+    },
   },
   columns: {
     "column-1": {
       id: "column-1",
       title: "Open",
-      itemsIds: [
-        "item-1",
-        "item-2",
-        "item-3",
-        "item-4",
-        "item-5",
-        "item-6",
-        "item-7",
-      ],
+      itemsIds: ["item-1", "item-2", "item-3", "item-4"],
     },
     "column-2": {
       id: "column-2",

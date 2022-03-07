@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { initialBoardData } from "./dnd/dataset";
+import { initialBoardData } from "./Main";
 import { BoardColumn } from "./board-column";
 
 const BoardEl = styled.div`

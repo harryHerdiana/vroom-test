@@ -29,18 +29,20 @@ const BoardItemEl = styled.div<BoardItemStylesProps>`
 
 export const BoardItem = (props: BoardItemProps) => {
   return (
-    <Draggable draggableId={props.item.id} index={props.index}>
-      {(provided, snapshot) => (
-        <BoardItemEl
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-        >
-          {/* The content of the BoardItem */}
-          {props.item.content}
-        </BoardItemEl>
-      )}
-    </Draggable>
+    <>
+      <Draggable draggableId={props.item.id} index={props.index}>
+        {(provided, snapshot) => (
+          <BoardItemEl
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
+          >
+            {/* The content of the BoardItem */}
+            {props.item.title}
+          </BoardItemEl>
+        )}
+      </Draggable>
+    </>
   );
 };
