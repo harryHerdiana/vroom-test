@@ -1,132 +1,82 @@
-import * as React from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import styled from "styled-components";
-import { initialBoardData } from "./Main";
-import { BoardColumn } from "./board-column";
+import Board from "react-trello";
+import { useNavigate, Link } from "react-router-dom";
 
-const BoardEl = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-`;
-export class Board extends React.Component {
-  // Initialize board state with board data
-  state = initialBoardData;
-
-  // Handle drag & drop
-  onDragEnd = (result: any) => {
-    const { source, destination, draggableId } = result;
-
-    // Do nothing if item is dropped outside the list
-    if (!destination) {
-      return;
-    }
-
-    // Do nothing if the item is dropped into the same place
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    // Find column from which the item was dragged from
-    const columnStart = (this.state.columns as any)[source.droppableId];
-
-    // Find column in which the item was dropped
-    const columnFinish = (this.state.columns as any)[destination.droppableId];
-
-    // Moving items in the same list
-    if (columnStart === columnFinish) {
-      // Get all item ids in currently active list
-      const newItemsIds = Array.from(columnStart.itemsIds);
-
-      // Remove the id of dragged item from its original position
-      newItemsIds.splice(source.index, 1);
-
-      // Insert the id of dragged item to the new position
-      newItemsIds.splice(destination.index, 0, draggableId);
-
-      // Create new, updated, object with data for columns
-      const newColumnStart = {
-        ...columnStart,
-        itemsIds: newItemsIds,
-      };
-
-      // Create new board state with updated data for columns
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newColumnStart.id]: newColumnStart,
+export const data = {
+  lanes: [
+    {
+      cards: [
+        {
+          description: "2 Gallons of milk at the Deli store",
+          id: "Plan1",
+          label: "15 mins",
+          laneId: "PLANNED",
+          title: "Buy milk",
         },
-      };
-
-      // Update the board state with new data
-      this.setState(newState);
-    } else {
-      // Moving items from one list to another
-      // Get all item ids in source list
-      const newStartItemsIds = Array.from(columnStart.itemsIds);
-
-      // Remove the id of dragged item from its original position
-      newStartItemsIds.splice(source.index, 1);
-
-      // Create new, updated, object with data for source column
-      const newColumnStart = {
-        ...columnStart,
-        itemsIds: newStartItemsIds,
-      };
-
-      // Get all item ids in destination list
-      const newFinishItemsIds = Array.from(columnFinish.itemsIds);
-
-      // Insert the id of dragged item to the new position in destination list
-      newFinishItemsIds.splice(destination.index, 0, draggableId);
-
-      // Create new, updated, object with data for destination column
-      const newColumnFinish = {
-        ...columnFinish,
-        itemsIds: newFinishItemsIds,
-      };
-
-      // Create new board state with updated data for both, source and destination columns
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newColumnStart.id]: newColumnStart,
-          [newColumnFinish.id]: newColumnFinish,
+        {
+          description: "Sort out recyclable and waste as needed",
+          id: "Plan2",
+          label: "10 mins",
+          laneId: "PLANNED",
+          title: "Dispose Garbage",
         },
-      };
+        {
+          description: "Can AI make memes?",
+          id: "Plan3",
+          label: "30 mins",
+          laneId: "PLANNED",
+          title: "Write Blog",
+        },
+        {
+          description: "Transfer to bank account",
+          id: "Plan4",
+          label: "5 mins",
+          laneId: "PLANNED",
+          title: "Pay Rent",
+        },
+      ],
+      currentPage: 1,
+      id: "PLANNED",
+      title: "Planned Tasks",
+    },
+    {
+      cards: [
+        {
+          description:
+            "Soap wash and polish floor. Polish windows and doors. Scrap all broken glasses",
+          id: "Wip1",
+          label: "30 mins",
+          laneId: "WIP",
+          title: "Clean House",
+        },
+      ],
+      currentPage: 1,
+      droppable: false,
+      id: "WIP",
+      title: "Work In Progress (Not Droppable)",
+    },
+    {
+      cards: [],
+      currentPage: 1,
+      id: "COMPLETED",
 
-      // Update the board state with new data
-      this.setState(newState);
-    }
-  };
+      style: {
+        width: 280,
+      },
+      title: "Completed (Droppable)",
+    },
+  ],
+};
 
-  render() {
-    return (
-      <BoardEl>
-        {/* Create context for drag & drop */}
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          {/* Get all columns in the order specified in 'board-initial-data.ts' */}
-          {this.state.columnsOrder.map((columnId) => {
-            // Get id of the current column
-            const column = (this.state.columns as any)[columnId];
-
-            // Get item belonging to the current column
-            const items = column.itemsIds.map(
-              (itemId: string) => (this.state.items as any)[itemId]
-            );
-
-            // Render the BoardColumn component
-            return (
-              <BoardColumn key={column.id} column={column} items={items} />
-            );
-          })}
-        </DragDropContext>
-      </BoardEl>
-    );
-  }
+export default function Boards() {
+  const navigate = useNavigate();
+  return (
+    <div className="App">
+      <h1 className="bg-green-200">Vroom Test</h1>
+      <Board
+        data={data}
+        editable
+        onCardClick={(cardId) => navigate(`/ticket/${cardId}`)}
+      />
+    </div>
+  );
 }

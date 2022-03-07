@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { Route, Routes as RoutesComponent } from "react-router";
 import Login from "./components/Login";
 import Main from "./components/Main";
-import App from "./App";
+import CardDetail from "./components/CardDetail";
 
 const Routes = () => {
   const navigate = useNavigate();
@@ -16,6 +16,9 @@ const Routes = () => {
     <RoutesComponent>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Main />} />
+      {/* <Route path="/ticket/:value">
+        <CardDetail />
+      </Route> */}
     </RoutesComponent>
   );
 };
