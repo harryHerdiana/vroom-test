@@ -10,13 +10,15 @@ const userContextDefaultValue: IUserContext = {
   ],
   setLogin: () => null,
   setLogout: () => null,
-  toggleLoading: () => null,
+  setLoading: () => null,
+  setNotLoading: () => null,
   isLoading: false,
   isLogin: false,
 };
 
 export const UserContext = createContext<IUserContext>(userContextDefaultValue);
 export const UserProvider = (props: { children: React.ReactElement }) => {
+  const randomTime = Math.random() * 2000;
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const userContextDefaultValue: IUserContext = {
@@ -26,11 +28,12 @@ export const UserProvider = (props: { children: React.ReactElement }) => {
         password: "frontendtest2022",
       },
     ],
-    setLogin: () => setIsLogin(true),
-    setLogout: () => setIsLogin(false),
-    toggleLoading: () => setIsloading(!isLoading),
     isLoading: isLoading,
     isLogin: isLogin,
+    setLogin: () => setIsLogin(true),
+    setLogout: () => setIsLogin(false),
+    setLoading: () => setIsloading(true),
+    setNotLoading: () => setIsloading(false),
   };
 
   return (

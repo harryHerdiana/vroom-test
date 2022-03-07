@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 import { UserContext } from "../Context/UserContext";
 
 const Login = () => {
@@ -9,20 +9,25 @@ const Login = () => {
     email: "",
     password: "",
   });
-  let navigate = useNavigate();
+  let history = useHistory();
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    const randomTime = Math.random() * 2000;
     event.preventDefault();
     const checkUser = userContext?.userData.find(
       (x) => x.email === input.email && x.password === input.password
     );
     if (checkUser) {
+      userContext.setLoading();
+      setTimeout(() => {
+        userContext.setNotLoading();
+        history.push("/");
+      }, randomTime);
       userContext.setLogin();
       Cookies.set("email", checkUser.email, { expires: 1 });
       Cookies.set("password", checkUser.password, { expires: 1 });
-      navigate("/");
     } else {
-      navigate("/login");
+      history.push("/login");
     }
   };
   const handleChange = (event: { target: { value: any; name: any } }) => {
@@ -30,6 +35,16 @@ const Login = () => {
     let name = event.target.name;
     setInput({ ...input, [name]: typeOfInput });
   };
+  const testing = () => {
+    userContext.setLoading();
+    console.log(userContext.isLoading, " before timeout");
+    const randomTime = Math.random() * 2000;
+    setTimeout(() => {
+      userContext.setNotLoading();
+      console.log(userContext.isLoading, " after timeout");
+    }, randomTime);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -51,6 +66,8 @@ const Login = () => {
         <br />
         <button>Login</button>
       </form>
+      <button onClick={testing}>Test</button>
+      {userContext.isLoading && <div>Loading</div>}
     </>
   );
 };

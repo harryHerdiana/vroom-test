@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 import { UserContext } from "../Context/UserContext";
 import Cookies from "js-cookie";
 import Boards from "./board";
 
 const Main = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { isLogin, setLogout } = useContext(UserContext);
+  const handleLogin = () => {};
   const handleLogout = () => {
     setLogout();
     Cookies.remove("user");
@@ -14,11 +15,11 @@ const Main = () => {
     Cookies.remove("token");
   };
   return (
-    <div>
+    <div className="flex flex-col">
       {isLogin === false && (
         <div>
           <h1>You are not logged in, please log in by clicking below button</h1>
-          <button onClick={() => navigate("/login")}>Login</button>
+          <button onClick={() => history.push("/login")}>Login</button>
         </div>
       )}
       {isLogin && (

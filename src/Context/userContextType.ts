@@ -7,5 +7,6 @@ export type IUserContext = {
   isLoading: boolean;
   setLogin: () => void;
   setLogout: () => void;
-  toggleLoading: () => void;
+  setLoading: () => void;
+  setNotLoading: () => void;
 };

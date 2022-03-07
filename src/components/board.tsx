@@ -1,5 +1,7 @@
 import Board from "react-trello";
-import { useNavigate, Link } from "react-router-dom";
+import { useHistory } from "react-router";
+import { UserContext } from "../Context/UserContext";
+import React, { useContext, useState } from "react";
 
 export const data = {
   lanes: [
@@ -52,7 +54,7 @@ export const data = {
       currentPage: 1,
       droppable: false,
       id: "WIP",
-      title: "Work In Progress (Not Droppable)",
+      title: "Work In Progress",
     },
     {
       cards: [],
@@ -68,14 +70,27 @@ export const data = {
 };
 
 export default function Boards() {
-  const navigate = useNavigate();
+  const userContext = React.useContext(UserContext);
+  const history = useHistory();
+  const testing = () => {
+    userContext.setLoading();
+    console.log(userContext.isLoading, " before timeout");
+    const randomTime = Math.random() * 2000;
+    setTimeout(() => {
+      userContext.setNotLoading();
+      console.log(userContext.isLoading, " after timeout");
+    }, randomTime);
+  };
+
   return (
     <div className="App">
       <h1 className="bg-green-200">Vroom Test</h1>
+      {userContext.isLoading && <div>Loading</div>}
       <Board
         data={data}
         editable
-        onCardClick={(cardId) => navigate(`/ticket/${cardId}`)}
+        onCardMoveAcrossLanes={() => testing()}
+        onCardClick={(cardId) => history.push(`/ticket/${cardId}`)}
       />
     </div>
   );
